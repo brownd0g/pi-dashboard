@@ -43,9 +43,12 @@ def data():
     indoorTemp = random.random() * 100
     outdoorTemp = random.random() * 50
     data = [time() * 1000, fridgeTemp, indoorTemp, outdoorTemp]
+
     response = make_response(json.dumps(data))
     response.content_type = 'application/json'
+    print(fridgeTemp)
     return response
+
 
 
 app.run(host='0.0.0.0', port='5000', debug=True)
