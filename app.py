@@ -2,7 +2,7 @@ from flask import Flask, render_template, make_response
 import random
 from time import time
 import json
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 
 app = Flask(__name__)
 
