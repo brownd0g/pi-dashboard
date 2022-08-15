@@ -299,7 +299,7 @@
 
             outdoorT.innerHTML=Math.round((data[2] * 10) / 10) + "°C";
             indoorT.innerHTML=Math.round((data[1] * 10) / 10) + "°C";
-            fridgeT.innerHTML=Math.round((data[0] * 10) / 10) + "°C";
+            fridgeT.innerHTML=data[0] + "°C";
 
             setTimeout(requestData, 2000);
         });

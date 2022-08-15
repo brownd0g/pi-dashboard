@@ -17,8 +17,8 @@
       <file leaf-file-name="index1.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/index1.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="385">
-              <caret line="301" column="61" lean-forward="false" selection-start-line="301" selection-start-column="61" selection-end-line="301" selection-end-column="61" />
+            <state relative-caret-position="363">
+              <caret line="300" column="16" lean-forward="false" selection-start-line="300" selection-start-column="16" selection-end-line="300" selection-end-column="16" />
               <folding />
             </state>
           </provider>
@@ -362,8 +362,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/index1.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="385">
-          <caret line="301" column="61" lean-forward="false" selection-start-line="301" selection-start-column="61" selection-end-line="301" selection-end-column="61" />
+        <state relative-caret-position="363">
+          <caret line="300" column="16" lean-forward="false" selection-start-line="300" selection-start-column="16" selection-end-line="300" selection-end-column="16" />
           <folding />
         </state>
       </provider>
