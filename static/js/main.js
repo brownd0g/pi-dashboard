@@ -65,7 +65,7 @@
 
 
     // Worldwide Sales Chart
-    /*var ctx1 = $("#worldwide-sales").get(0).getContext("2d");
+    var ctx1 = $("#sales-revenue").get(0).getContext("2d");
     var myChart1 = new Chart(ctx1, {
         type: "bar",
         data: {
@@ -90,11 +90,11 @@
         options: {
             responsive: true
         }
-    });*/
+    });
 
 
     // Salse & Revenue Chart
-    var ctx2 = $("#sales-revenue").get(0).getContext("2d");
+    var ctx2 = $("#worldwide-sales").get(0).getContext("2d");
     var myChart2 = new Chart(ctx2, {
         type: "line",
         data: {
