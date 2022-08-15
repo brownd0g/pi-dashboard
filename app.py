@@ -46,7 +46,6 @@ def data():
 
     response = make_response(json.dumps(data))
     response.content_type = 'application/json'
-    print(fridgeTemp)
     return response
 
 
