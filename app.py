@@ -3,8 +3,14 @@ import random
 from time import time
 import json
 import RPi.GPIO as GPIO
+from w1thermsensor import W1ThermSensor
 
 app = Flask(__name__)
+
+# pi sensors
+sensor = W1ThermSensor()
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(21, GPIO.OUT)
 
 @app.route('/')
 def index():
@@ -32,9 +38,11 @@ def widget():
 
 @app.route('/data')
 def data():
+
+    fridgeTemp = sensor.get_temperature()
     indoorTemp = random.random() * 100
     outdoorTemp = random.random() * 50
-    data = [time() * 1000, indoorTemp, outdoorTemp]
+    data = [time() * 1000, fridgeTemp, indoorTemp, outdoorTemp]
     response = make_response(json.dumps(data))
     response.content_type = 'application/json'
     return response

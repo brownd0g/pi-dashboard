@@ -66,7 +66,7 @@
                             <i class="fa fa-thermometer-half fa-3x text-primary"></i>
                             <div class="ms-3">
                                 <p class="mb-2">Outdoor</p>
-                                <h6 id= "outdoor-temp" class="mb-0">1°C</h6>
+                                <h6 id="outdoor-temp" class="mb-0">1°C</h6>
                             </div>
                         </div>
                     </div>
@@ -75,7 +75,7 @@
                             <i class="fa fa-thermometer-half fa-3x text-primary"></i>
                             <div class="ms-3">
                                 <p class="mb-2">Indoor</p>
-                                <h6 class="mb-0">1°C</h6>
+                                <h6 id="indoor-temp" class="mb-0">1°C</h6>
                             </div>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
                             <i class="fa fa-thermometer-half fa-3x text-primary"></i>
                             <div class="ms-3">
                                 <p class="mb-2">Fridge</p>
-                                <h6 class="mb-0">1°C</h6>
+                                <h6 id="fridge=temp" class="mb-0">1°C</h6>
                             </div>
                         </div>
                     </div>
@@ -289,11 +289,17 @@
         var requests = $.get('/data');
         var tm = requests.done(function(result) {
             var data = [];
-            data.push(result[0]);
             data.push(result[1]);
+            data.push(result[2]);
+            data.push(result[3]);
 
             var outdoorT = document.getElementById("outdoor-temp")
-            outdoorT.innerHTML=Math.round(data[1]) + "°C";
+            var indoorT = document.getElementById("indoor-temp")
+            var fridgeT = document.getElementById("fridge-temp")
+
+            outdoorT.innerHTML=Math.round(data[2]) + "°C";
+            indoorT.innerHTML=Math.round(data[2]) + "°C";
+            fridgeT.innerHTML=Math.round(data[1]) + "°C";
 
             setTimeout(requestData, 2000);
         });
