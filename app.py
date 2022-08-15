@@ -43,7 +43,12 @@ def data():
     indoorTemp = random.random() * 100
     outdoorTemp = random.random() * 50
     data = [time() * 1000, fridgeTemp, indoorTemp, outdoorTemp]
-
+    if fridgeTemp > 22:
+        print('Relay On')
+        GPIO.output(21, GPIO.HIGH)
+    else:
+        print('Relay Off')
+        GPIO.output(21, GPIO.LOW)
     response = make_response(json.dumps(data))
     response.content_type = 'application/json'
     return response
