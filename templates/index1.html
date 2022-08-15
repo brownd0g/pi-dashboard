@@ -298,8 +298,8 @@
             var fridgeT = document.getElementById("fridge-temp")
 
             outdoorT.innerHTML=Math.round(data[2]) + "°C";
-            indoorT.innerHTML=Math.round(data[2]) + "°C";
-            fridgeT.innerHTML=Math.round(data[1]) + "°C";
+            indoorT.innerHTML=Math.round(data[1]) + "°C";
+            fridgeT.innerHTML=Math.round(data[0]) + "°C";
 
             setTimeout(requestData, 2000);
         });
