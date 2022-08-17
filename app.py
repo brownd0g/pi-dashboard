@@ -4,6 +4,7 @@ from time import time
 import json
 import RPi.GPIO as GPIO
 from w1thermsensor import W1ThermSensor
+import requests
 
 app = Flask(__name__)
 
@@ -11,6 +12,12 @@ app = Flask(__name__)
 #sensor = W1ThermSensor()
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(21, GPIO.OUT)
+
+# esp8266 ips
+URL = "10.0.0.30/Temperature"
+location = "Outside"
+PARAMS = {'tempOneUrl':location}
+
 
 @app.route('/')
 def index():
@@ -52,9 +59,13 @@ def data():
         GPIO.output(21, GPIO.LOW)
     response = make_response(json.dumps(data))
     response.content_type = 'application/json'
+    getTemp()
     return response
 ######################################
 
-
+def getTemp():
+    r = requests.get(url=URL, params=PARAMS)
+    data = r.json()
+    print(data)
 
 app.run(host='0.0.0.0', port='5000', debug=True)
