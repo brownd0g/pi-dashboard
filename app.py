@@ -14,7 +14,7 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(21, GPIO.OUT)
 
 # esp8266 ips
-URL = " http://10.0.0.56/Temperature"
+URL = " http://10.0.0.56/temperature"
 location = "Outside"
 PARAMS = {'tempOneUrl':location}
 
