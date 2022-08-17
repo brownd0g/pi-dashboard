@@ -16,7 +16,7 @@ GPIO.setup(21, GPIO.OUT)
 # esp8266 ips
 outdoorTempURL = "http://10.0.0.56/temperature"
 outdoorLocation = "Outside"
-PARAMS = {'tempOneUrl':location}
+PARAMS = {'tempOneUrl':outdoorLocation}
 
 
 @app.route('/')
