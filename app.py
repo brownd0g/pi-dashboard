@@ -8,7 +8,7 @@ from w1thermsensor import W1ThermSensor
 app = Flask(__name__)
 
 # pi sensors
-sensor = W1ThermSensor()
+#sensor = W1ThermSensor()
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(21, GPIO.OUT)
 
@@ -39,15 +39,16 @@ def widget():
 @app.route('/data')
 def data():
 
-    fridgeTemp = sensor.get_temperature()
+    #fridgeTemp = sensor.get_temperature()
+    fridgeTemp = 1
     indoorTemp = random.random() * 100
     outdoorTemp = random.random() * 50
+
     data = [time() * 1000, fridgeTemp, indoorTemp, outdoorTemp]
     if fridgeTemp > 22:
         print('Relay On')
         GPIO.output(21, GPIO.HIGH)
     else:
-        print('Relay Off')
         GPIO.output(21, GPIO.LOW)
     response = make_response(json.dumps(data))
     response.content_type = 'application/json'
