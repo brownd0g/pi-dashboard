@@ -67,6 +67,6 @@ def getTemp():
     r = requests.get(url=URL, params=PARAMS)
     #data = r.json()
 
-    print("temp: ", r.content)
+    print("temp: ", r.content.decode())
 
 app.run(host='0.0.0.0', port='5000', debug=True)
