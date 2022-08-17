@@ -14,8 +14,8 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(21, GPIO.OUT)
 
 # esp8266 ips
-URL = " http://10.0.0.56/temperature"
-location = "Outside"
+outdoorTempURL = "http://10.0.0.56/temperature"
+outdoorLocation = "Outside"
 PARAMS = {'tempOneUrl':location}
 
 
@@ -49,7 +49,8 @@ def data():
     #fridgeTemp = sensor.get_temperature()
     fridgeTemp = 1
     indoorTemp = random.random() * 100
-    outdoorTemp = random.random() * 50
+    outdoorTemp = requests.get(url=outdoorTempURL, params=PARAMS)
+    outdoorTemp = float(outdoorTemp.content)
 
     data = [time() * 1000, fridgeTemp, indoorTemp, outdoorTemp]
     if fridgeTemp > 22:
@@ -59,14 +60,8 @@ def data():
         GPIO.output(21, GPIO.LOW)
     response = make_response(json.dumps(data))
     response.content_type = 'application/json'
-    getTemp()
     return response
 ######################################
 
-def getTemp():
-    r = requests.get(url=URL, params=PARAMS)
-    #data = r.json()
-
-    print("temp: ", r.content.decode())
 
 app.run(host='0.0.0.0', port='5000', debug=True)
