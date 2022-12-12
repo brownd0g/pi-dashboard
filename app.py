@@ -15,7 +15,7 @@ app = Flask(__name__)
 
 # esp8266 ips
 #fridgeEsp = 'http://...' put fridge esp8266 ip here
-doorEsp = 'http://10.0.0.117' #put door esp8266 ip here
+doorEsp = "http://10.0.0.117/" #put door esp8266 ip here
 outdoorRearEsp = "http://10.0.0.56/"
 outdoorTempURL = outdoorRearEsp + "temperature"
 outdoorLocation = "Outside"
@@ -37,9 +37,12 @@ def off():
 
 @app.route('/doorbell')
 def doorbell():
-    url = doorEsp + '/doorbell'
+    url = doorEsp + "doorbell"
     db = requests.get(url=url, params=PARAMS)
     dbJson = {"Door": db}
+    print("URL----------------------------------------------:")
+    print(url)
+    print("db----------------------------------------------:")
     print(db)
     response = make_response(jsonify(dbJson))
     response.content_type = 'application/json'
