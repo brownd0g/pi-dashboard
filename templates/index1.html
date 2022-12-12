@@ -289,8 +289,8 @@
             var indoorT = document.getElementById("indoor-temp")
             var fridgeT = document.getElementById("fridge-temp")
 
-            outdoorT.innerHTML=data[2] + "°C";
-            indoorT.innerHTML=data[1] + "°C";
+            outdoorT.innerHTML=data[2].toFixed(1) + "°C";
+            indoorT.innerHTML=data[1].toFixed(1) + "°C";
             fridgeT.innerHTML=data[0].toFixed(1) + "°C";
 
             setTimeout(requestData, 2000);
