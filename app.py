@@ -1,4 +1,4 @@
-from flask import Flask, render_template, make_response
+from flask import Flask, render_template, make_response, jsonify
 import random
 from time import time
 import json
@@ -40,7 +40,8 @@ def doorbell():
     url = doorEsp + '/doorbell'
     db = requests.get(url=url, params=PARAMS)
     dbJson = {"Door": db}
-    response = make_response(json.dumps(dbJson))
+    print(db)
+    response = make_response(jsonify(dbJson))
     response.content_type = 'application/json'
     return response
 
