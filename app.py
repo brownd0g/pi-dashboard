@@ -39,6 +39,7 @@ def off():
 def doorbell():
     url = doorEsp + "doorbell"
     db = requests.get(url=url, params=PARAMS)
+    db = db.content
     dbJson = {"Door": db}
     print("URL----------------------------------------------:")
     print(url)
