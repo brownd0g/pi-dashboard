@@ -39,7 +39,8 @@ def off():
 def doorbell():
     url = doorEsp + '/doorbell'
     db = requests.get(url=url, params=PARAMS)
-    response = make_response(json.dumps(db))
+    dbJson = [db]
+    response = make_response(json.dumps(dbJson))
     response.content_type = 'application/json'
     return response
 
