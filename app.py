@@ -39,9 +39,9 @@ def off():
 def doorbell():
     url = doorEsp + '/doorbell'
     db = requests.get(url=url, params=PARAMS)
-    dbJson = [db]
-    response = make_response(db)
-    response.content_type = 'text/plain'
+    dbJson = {"Door": db}
+    response = make_response(json.dumps(dbJson))
+    response.content_type = 'application/json'
     return response
 
 @app.route('/data')
