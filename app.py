@@ -21,8 +21,6 @@ outdoorTempURL = outdoorRearEsp + "temperature"
 outdoorLocation = "Outside"
 PARAMS = {'tempOneUrl':outdoorLocation}
 
-global db = False
-
 
 @app.route('/')
 def index():
