@@ -1,0 +1,44 @@
+{
+  "esp_roof": {
+    "status": "online",
+    "ip": "10.0.0.118",
+    "data": {
+      "lounge": {
+        "lightState": "OFF",
+        "switchState": "OFF",
+        "switchRelayState": "OFF",
+        "mainsRelayState": "OFF"
+      },
+      "kitchen": {
+        "lightState": "OFF",
+        "switchState": "OFF",
+        "switchRelayState": "OFF",
+        "mainsRelayState": "OFF"
+      },
+      "entry": {
+        "lightState": "OFF",
+        "switchState": "OFF",
+        "switchRelayState": "OFF",
+        "mainsRelayState": "OFF"
+      }
+    }
+  },
+
+  "esp_door": {
+    "status": "online",
+    "ip": "10.0.0.117",
+    "data": {
+      "door": ""
+    }
+  },
+
+  "esp_tv": {
+    "status": "online",
+    "ip": "10.0.0.119",
+    "data": {
+      "aircon": "",
+      "room_temp": "",
+      "lights": ""
+    }
+  }
+}
