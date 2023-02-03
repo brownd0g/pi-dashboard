@@ -23,16 +23,15 @@ def get_states():
 
     try:
         if ESP_TV.isSet:
-            url = ESP_TV.ip_paths["post_aircon"]
-            response_raw = requests.post(url=url, data=ESP_TV.data["aircon"])
+            response_raw = requests.post(url=ESP_TV.ip_paths["post_aircon"], data=ESP_TV.data["aircon"])
         else:
-            url = ESP_TV.ip_paths["get_state"]
-            response_raw = requests.get(url=url)
+            response_raw = requests.get(url=ESP_TV.ip_paths["get_state"])
             tv_raw = response_raw.content.decode()
             tv_json = json.loads(tv_raw)
             ESP_TV.data["aircon"] = tv_json["ESP_TV"]["data"]["aircon"]
             ESP_TV.isSet = True
         ESP_TV.status = "online" if response_raw.status_code == 200 else "offline"
+        requests.post(url=ESP_TV.ip_paths["post_teams"], data=ESP_TV.data["teams_status"])
 
     except requests.exceptions.RequestException as e:
         print("FAILED REQUEST")
