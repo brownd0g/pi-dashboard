@@ -16,14 +16,14 @@ ESP_TV.ip_paths["get_state"] = ip_tv + "state"
 # set default data to post
 ESP_TV.data = {
     "aircon": {
-        "power": "1",
-        "mode": "",
-        "temp": "",
-        "fan": "",
-        "powerful": "",
-        "quiet": "",
-        "econ": "",
-        "comfort": ""
+        "power": "0",
+        "mode": "1",
+        "temp": "20",
+        "fan": "1",
+        "powerful": "0",
+        "quiet": "0",
+        "econ": "0",
+        "comfort": "0"
     },
     "room_temp": "",
     "teams_status": "unknown"
