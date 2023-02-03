@@ -2,13 +2,14 @@ from flask import make_response
 
 
 class Esp:
-    def __init__(self, name=None, ip=None, data="none"):
+    def __init__(self, name=None, ip=None, data="none", is_set=False):
         self.name = name
         self.ip = ip
         self.data = data
         self.ip_paths = {}
         self.status = "offline"
         self.request_args = None
+        self.isSet = is_set
 
     def get_json(self):
         dict_1 = {"status": self.status, "ip": self.ip, "data": self.data}
