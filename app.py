@@ -83,7 +83,6 @@ def set_call_state():
     resp = ESP_TV.get_json()
     json_formatted_str = json.dumps(resp["esp_aircon"], indent=2)
     response = make_response(json_formatted_str)
-    print(response.data)
     response.content_type = 'application/json'
     return response
 
