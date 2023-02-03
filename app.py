@@ -126,7 +126,7 @@ def set_call_state():
     data_raw = requests.post(url=url, data=action,)
     data = data_raw.content.decode()
     response_dict = json.loads(data)
-
+    print(response_dict)
     if "data" in response_dict:
         esp_aircon.data = response_dict["data"]
     else:
