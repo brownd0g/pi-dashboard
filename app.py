@@ -18,6 +18,7 @@ s.mount(ESP_TV.ip, HTTPAdapter(max_retries=retries))
 def get_states():
     try:
         requests.post(url=ESP_TV.ip_paths["post_teams"], data=ESP_TV.data)
+        print("ESP FROM GET STATES", ESP_TV.data)
         if ESP_TV.isSet:
             response_raw = requests.post(url=ESP_TV.ip_paths["post_aircon"], data=ESP_TV.data["aircon"])
         else:
@@ -38,7 +39,7 @@ def get_states():
 
 
 scheduler = BackgroundScheduler()
-scheduler.add_job(func=get_states, trigger="interval", seconds=5)
+scheduler.add_job(func=get_states, trigger="interval", seconds=25)
 scheduler.start()
 
 # Shut down the scheduler when exiting the app
@@ -68,11 +69,11 @@ def set_aircon():
 
 @app.route('/api/teams', methods=['POST', 'GET'])
 def set_call_state():
-    print("status at start", ESP_TV.data["teams_status"])
+    #print("status at start", ESP_TV.data["teams_status"])
     action = request.args.to_dict()
 
     if "status" in action:
-        print("setting teams status")
+        #print("setting teams status")
         ESP_TV.data["teams_status"] = action["status"]
 
     resp = ESP_TV.get_json()
@@ -80,7 +81,7 @@ def set_call_state():
     response = make_response(json_formatted_str)
     response.content_type = 'application/json'
 
-    print("status at end", ESP_TV.data["teams_status"])
+    #print("status at end", ESP_TV.data["teams_status"])
 
     return response
 
