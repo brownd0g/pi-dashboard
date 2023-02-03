@@ -71,7 +71,7 @@ def get_states():
     try:
         aircon_raw = s.get(url=esp_aircon.ip_paths["get_state"], timeout=tout)
         aircon_raw = json.loads(aircon_raw.content.decode())
-        print("aircon online")
+
         esp_aircon.status = "online"
         esp_aircon.data = aircon_raw["esp_aircon"]["data"]
 
