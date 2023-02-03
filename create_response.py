@@ -1,10 +1,12 @@
+from flask import make_response
+
 
 class Esp:
-    def __init__(self, name=None, ip=None, data="none", path=None):
+    def __init__(self, name=None, ip=None, data="none"):
         self.name = name
         self.ip = ip
         self.data = data
-        self.path = ip + path
+        self.ip_paths = {}
         self.status = "offline"
         self.request_args = None
 
@@ -33,3 +35,8 @@ class Esp:
         return self.request_args
 
 
+def create_json_response(esps):
+    json_return = {}
+    for item in esps:
+        json_return = json_return | item.get_json()
+    return make_response(json_return)

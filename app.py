@@ -4,23 +4,27 @@ from flask import Flask, render_template, make_response, jsonify, request
 import json
 import requests
 from requests.adapters import HTTPAdapter, Retry
+from server_state import server_state
+import atexit
+
+from apscheduler.schedulers.background import BackgroundScheduler
+
 
 import create_response as ESP
 
-# esp8266 ips
+# esp8266 ips and objects
 ip_door = "http://10.0.0.117/"
+esp_door = ESP.Esp("esp_door", ip_door)
+
 ip_roof = "http://10.0.0.118/"
-ip_tv = "http://10.0.0.119/"
+esp_roof = ESP.Esp("esp_roof", ip_roof)
+
 ip_aircon = "http://10.0.0.126/"
+esp_aircon = ESP.Esp("esp_aircon", ip_aircon)
+esp_aircon.ip_paths["post_aircon"] = ip_aircon + "aircon"
+esp_aircon.ip_paths["post_teams"] = ip_aircon + "teams"
+esp_aircon.ip_paths["get_state"] = ip_aircon + "state"
 
-# esp objects
-esp_door = ESP.Esp("esp_door", ip_door, None, "switch")
-esp_roof = ESP.Esp("esp_roof", ip_roof, None, "state")
-esp_tv = ESP.Esp("esp_tv", ip_tv, None, "switch")
-esp_aircon = ESP.Esp("esp_aircon", ip_aircon, None, "switch")
-
-outdoorLocation = "test"
-PARAMS = {'test': outdoorLocation}
 
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
@@ -34,7 +38,6 @@ def get_states():
 
     s.mount(esp_door.ip, HTTPAdapter(max_retries=retries))
     s.mount(esp_roof.ip, HTTPAdapter(max_retries=retries))
-    s.mount(esp_tv.ip, HTTPAdapter(max_retries=retries))
     s.mount(esp_aircon.ip, HTTPAdapter(max_retries=retries))
 
     try:
@@ -45,7 +48,7 @@ def get_states():
 
     except requests.exceptions.RequestException as e:
         esp_door.status = "offline"
-        esp_door.data = "none"
+        esp_door.data = {}
 
     try:
         roof_raw = s.get(url=esp_roof.path, timeout=tout)
@@ -55,62 +58,69 @@ def get_states():
 
     except requests.exceptions.RequestException as e:
         esp_roof.status = "offline"
-        esp_roof.data = "none"
+        esp_roof.data = {}
 
     try:
-        tv_raw = s.get(url=esp_tv.path, timeout=tout)
-        tv_raw = json.loads(tv_raw.content.decode())
-        esp_tv.status = "online"
-        esp_tv.data = tv_raw["esp_roof"]["data"]
+        aircon_raw = s.get(url=esp_aircon["ip_paths"]["get_state"], timeout=tout)
+        aircon_raw = json.loads(aircon_raw.content.decode())
+        esp_aircon.status = "online"
+        esp_aircon.data = aircon_raw["esp_aircon"]["data"]
 
     except requests.exceptions.RequestException as e:
-        esp_tv.status = "offline"
-        esp_tv.data = "none"
-
-    merged_dict = esp_door.get_json()
-    merged_dict.update(esp_roof.get_json())
-    merged_dict.update(esp_tv.get_json())
-
-    all_states = json.dumps(merged_dict, indent=2)
-    return all_states
+        esp_aircon.status = "offline"
+        esp_aircon.data = {}
 
 
-@app.route('/api/state')
+scheduler = BackgroundScheduler()
+scheduler.add_job(func=get_states, trigger="interval", seconds=1)
+scheduler.start()
+
+# Shut down the scheduler when exiting the app
+atexit.register(lambda: scheduler.shutdown())
+
+@app.route('/api/state', methods=['POST', 'GET'])
 def index():
-
-    response = make_response(get_states())
+    response = ESP.create_json_response([esp_door, esp_roof, esp_aircon])
     response.content_type = 'application/json'
-    print(get_states())
     return response
 
 @app.route('/api/aircon', methods=['POST', 'GET'])
 def set_aircon():
-    url = esp_aircon.ip + "aircon"
-    action = request.args
-    action = action.to_dict()
-    data_raw = requests.post(url=url, data=action,)
+    url = esp_aircon["ip_paths"]["post_aircon"]
+    action = request.args.to_dict()
+    #action = action.to_dict()
+    data_raw = requests.post(url=url, data=action)
     data = data_raw.content.decode()
+    response_dict = json.loads(data)
 
-    json_object = json.loads(data)
-    json_formatted_str = json.dumps(json_object, indent=2)
+    if "data" in response_dict:
+        esp_aircon.data = response_dict["data"]
+    else:
+        esp_aircon.data = {}
+
+    json_formatted_str = json.dumps(esp_aircon.get_json(), indent=2)
     response = make_response(json_formatted_str)
 
     response.content_type = 'application/json'
-    print(json_formatted_str)
     return response
 
 
 @app.route('/api/teams', methods=['POST', 'GET'])
 def set_call_state():
-    url = esp_aircon.ip + "teams"
-    action = request.args
-    action = action.to_dict()
+    url = esp_aircon["ip_paths"]["post_teams"]
+    action = request.args.to_dict()
+    #action = action.to_dict()
     print(action)
     data_raw = requests.post(url=url, data=action,)
     data = data_raw.content.decode()
+    response_dict = json.loads(data)
 
-    json_object = json.loads(data)
-    json_formatted_str = json.dumps(json_object, indent=2)
+    if "data" in response_dict:
+        esp_aircon.data = response_dict["data"]
+    else:
+        esp_aircon.data = {}
+
+    json_formatted_str = json.dumps(esp_aircon.get_json(), indent=2)
     response = make_response(json_formatted_str)
 
     response.content_type = 'application/json'

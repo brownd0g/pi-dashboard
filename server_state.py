@@ -1,4 +1,4 @@
-{
+server_state = {
   "esp_roof": {
     "status": "online",
     "ip": "10.0.0.118",
