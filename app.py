@@ -49,6 +49,10 @@ def get_states():
     except requests.exceptions.RequestException as e:
         esp_door.status = "offline"
         esp_door.data = {}
+    except:
+
+        esp_door.status = "offline"
+        esp_door.data = {}
 
     try:
         roof_raw = s.get(url=esp_roof.ip_paths["get_state"], timeout=tout)
@@ -59,6 +63,9 @@ def get_states():
     except requests.exceptions.RequestException as e:
         esp_roof.status = "offline"
         esp_roof.data = {}
+    except:
+        esp_roof.status = "offline"
+        esp_roof.data = {}
 
     try:
         aircon_raw = s.get(url=esp_aircon.ip_paths["get_state"], timeout=tout)
@@ -67,6 +74,9 @@ def get_states():
         esp_aircon.data = aircon_raw["esp_aircon"]["data"]
 
     except requests.exceptions.RequestException as e:
+        esp_aircon.status = "offline"
+        esp_aircon.data = {}
+    except:
         esp_aircon.status = "offline"
         esp_aircon.data = {}
 
