@@ -13,7 +13,7 @@ app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
 s = requests.Session()
-retries = Retry(total=0, backoff_factor=0.0, status_forcelist=[500, 502, 503, 504])
+retries = Retry(total=1, backoff_factor=0.0, status_forcelist=[500, 502, 503, 504])
 s.mount(ESP_TV.ip, HTTPAdapter(max_retries=retries))
 def get_states():
     try:
@@ -21,7 +21,9 @@ def get_states():
         print("ESP FROM GET STATES", ESP_TV.data)
         if ESP_TV.isSet:
             response_raw = requests.post(url=ESP_TV.ip_paths["post_aircon"], data=ESP_TV.data["aircon"])
+            print("IF ESPISSET")
         else:
+            print("IF NOT ESPISSET")
             response_raw = requests.get(url=ESP_TV.ip_paths["get_state"])
             tv_raw = response_raw.content.decode()
             tv_json = json.loads(tv_raw)
@@ -69,19 +71,15 @@ def set_aircon():
 
 @app.route('/api/teams', methods=['POST', 'GET'])
 def set_call_state():
-    #print("status at start", ESP_TV.data["teams_status"])
     action = request.args.to_dict()
 
     if "status" in action:
-        #print("setting teams status")
         ESP_TV.data["teams_status"] = action["status"]
 
     resp = ESP_TV.get_json()
     json_formatted_str = json.dumps(resp["esp_aircon"], indent=2)
     response = make_response(json_formatted_str)
     response.content_type = 'application/json'
-
-    #print("status at end", ESP_TV.data["teams_status"])
 
     return response
 
