@@ -25,6 +25,7 @@ esp_aircon.ip_paths["post_aircon"] = ip_aircon + "aircon"
 esp_aircon.ip_paths["post_teams"] = ip_aircon + "teams"
 esp_aircon.ip_paths["get_state"] = ip_aircon + "state"
 
+print(esp_aircon.ip)
 
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
@@ -96,7 +97,7 @@ def index():
 
 @app.route('/api/aircon', methods=['POST', 'GET'])
 def set_aircon():
-    url = esp_aircon["ip_paths"]["post_aircon"]
+    url = esp_aircon.ip_paths["post_aircon"]
     action = request.args.to_dict()
     #action = action.to_dict()
     data_raw = requests.post(url=url, data=action)
@@ -117,7 +118,7 @@ def set_aircon():
 
 @app.route('/api/teams', methods=['POST', 'GET'])
 def set_call_state():
-    url = esp_aircon["ip_paths"]["post_teams"]
+    url = esp_aircon.ip_paths["post_teams"]
     action = request.args.to_dict()
     #action = action.to_dict()
     print(action)
