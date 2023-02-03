@@ -31,21 +31,12 @@ def get_states():
             ESP_TV.isSet = True
         ESP_TV.status = "online" if response_raw.status_code == 200 else "offline"
 
-
     except requests.exceptions.RequestException as e:
         print("FAILED REQUEST")
         ESP_TV.status = "offline"
     except:
         print("FAILED FOR SOME OTHER FUCKING REASON CUNT")
         ESP_TV.status = "offline"
-
-
-scheduler = BackgroundScheduler()
-scheduler.add_job(func=get_states, trigger="interval", seconds=25)
-scheduler.start()
-
-# Shut down the scheduler when exiting the app
-atexit.register(lambda: scheduler.shutdown())
 
 
 @app.route('/api/state', methods=['POST', 'GET'])
@@ -84,4 +75,11 @@ def set_call_state():
     return response
 
 
-app.run(host='0.0.0.0', port=5000, debug=True)
+scheduler = BackgroundScheduler()
+scheduler.add_job(func=get_states, trigger="interval", seconds=10)
+scheduler.start()
+
+# Shut down the scheduler when exiting the app
+atexit.register(lambda: scheduler.shutdown())
+
+app.run(host='0.0.0.0', port=5000, debug=True, use_reloader=False)
