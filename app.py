@@ -41,7 +41,7 @@ def get_states():
     s.mount(esp_aircon.ip, HTTPAdapter(max_retries=retries))
 
     try:
-        door_raw = s.get(url=esp_door.path, timeout=tout)
+        door_raw = s.get(url=esp_door.ip_paths["get_state"], timeout=tout)
         door_raw = json.loads(door_raw.content.decode())
         esp_door.status = "online"
         esp_door.data = door_raw["esp_door"]["data"]
@@ -51,7 +51,7 @@ def get_states():
         esp_door.data = {}
 
     try:
-        roof_raw = s.get(url=esp_roof.path, timeout=tout)
+        roof_raw = s.get(url=esp_roof.ip_paths["get_state"], timeout=tout)
         roof_raw = json.loads(roof_raw.content.decode())
         esp_roof.status = "online"
         esp_roof.data = roof_raw["esp_roof"]["data"]
@@ -61,7 +61,7 @@ def get_states():
         esp_roof.data = {}
 
     try:
-        aircon_raw = s.get(url=esp_aircon["ip_paths"]["get_state"], timeout=tout)
+        aircon_raw = s.get(url=esp_aircon.ip_paths["get_state"], timeout=tout)
         aircon_raw = json.loads(aircon_raw.content.decode())
         esp_aircon.status = "online"
         esp_aircon.data = aircon_raw["esp_aircon"]["data"]
