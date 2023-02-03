@@ -67,7 +67,6 @@ def set_aircon():
     json_formatted_str = json.dumps(ESP_TV.get_json(), indent=2)
     response = make_response(json_formatted_str)
 
-    print(response)
     response.content_type = 'application/json'
     return response
 
@@ -82,7 +81,7 @@ def set_call_state():
 
     json_formatted_str = json.dumps(ESP_TV.get_json(), indent=2)
     response = make_response(json_formatted_str)
-
+    print(response)
     response.content_type = 'application/json'
     return response
 
