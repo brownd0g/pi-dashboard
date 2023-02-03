@@ -80,7 +80,8 @@ def set_call_state():
         print("setting teams status")
         ESP_TV.data["teams_status"] = action["status"]
 
-    json_formatted_str = json.dumps(ESP_TV.get_json(), indent=2)
+    resp = ESP_TV.get_json()
+    json_formatted_str = json.dumps(resp["esp_aircon"], indent=2)
     response = make_response(json_formatted_str)
     print(response.data)
     response.content_type = 'application/json'
