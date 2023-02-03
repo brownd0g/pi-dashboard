@@ -22,6 +22,7 @@ def get_states():
     s.mount(ESP_TV.ip, HTTPAdapter(max_retries=retries))
 
     try:
+        requests.post(url=ESP_TV.ip_paths["post_teams"], data=ESP_TV.data)
         if ESP_TV.isSet:
             response_raw = requests.post(url=ESP_TV.ip_paths["post_aircon"], data=ESP_TV.data["aircon"])
         else:
@@ -31,7 +32,7 @@ def get_states():
             ESP_TV.data["aircon"] = tv_json["ESP_TV"]["data"]["aircon"]
             ESP_TV.isSet = True
         ESP_TV.status = "online" if response_raw.status_code == 200 else "offline"
-        requests.post(url=ESP_TV.ip_paths["post_teams"], data=ESP_TV.data["teams_status"])
+
 
     except requests.exceptions.RequestException as e:
         print("FAILED REQUEST")
