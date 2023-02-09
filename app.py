@@ -73,7 +73,7 @@ def set_call_state():
 
 
 scheduler = BackgroundScheduler()
-scheduler.add_job(func=get_states, trigger="interval", seconds=10)
+scheduler.add_job(func=get_states, trigger="interval", seconds=1)
 scheduler.start()
 
 # Shut down the scheduler when exiting the app
