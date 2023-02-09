@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6ca5e7b9-27cf-420c-9717-5e5f8d2d7215" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tv.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +112,7 @@
       <recent name="C:\Users\Andrew Brown\Documents\PYTHON\IG" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.app">
+  <component name="RunManager" selected="Python.tv">
     <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="IG" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -227,9 +228,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.tv" />
         <item itemvalue="Python.app" />
         <item itemvalue="Python.work" />
-        <item itemvalue="Python.tv" />
         <item itemvalue="Python.chrome_cast" />
         <item itemvalue="Python.ig" />
       </list>

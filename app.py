@@ -15,6 +15,7 @@ app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 s = requests.Session()
 retries = Retry(total=1, backoff_factor=0.0, status_forcelist=[500, 502, 503, 504])
 s.mount(ESP_TV.ip, HTTPAdapter(max_retries=retries))
+
 def get_states():
     try:
         requests.post(url=ESP_TV.ip_paths["post_teams"], data=ESP_TV.data)
@@ -76,7 +77,7 @@ def set_call_state():
 
 
 scheduler = BackgroundScheduler()
-scheduler.add_job(func=get_states, trigger="interval", seconds=10)
+scheduler.add_job(func=get_states, trigger="interval", seconds=1)
 scheduler.start()
 
 # Shut down the scheduler when exiting the app
