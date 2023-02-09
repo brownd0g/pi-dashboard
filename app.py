@@ -12,9 +12,9 @@ from esp_definitions import ESP_TV
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
-s = requests.Session()
-retries = Retry(total=1, backoff_factor=0.0, status_forcelist=[500, 502, 503, 504])
-s.mount(ESP_TV.ip, HTTPAdapter(max_retries=retries))
+#s = requests.Session()
+#retries = Retry(total=10, backoff_factor=0.0, status_forcelist=[500, 502, 503, 504])
+#s.mount(ESP_TV.ip, HTTPAdapter(max_retries=retries))
 
 def get_states():
     try:
