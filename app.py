@@ -1,3 +1,5 @@
+import time
+
 from flask import Flask, make_response, request
 
 import json
@@ -11,6 +13,11 @@ from esp_definitions import ESP_TV
 
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+
+def reset_teams_status():
+
+    time.sleep(5)
+
 
 def get_states():
     try:
@@ -27,6 +34,7 @@ def get_states():
             ESP_TV.data["aircon"] = tv_json["ESP_TV"]["data"]["aircon"]
             ESP_TV.isSet = True
         ESP_TV.status = "online" if response_raw.status_code == 200 else "offline"
+        ESP_TV.data["teams_status"] = "unknown"
 
     except requests.exceptions.RequestException as e:
         print("FAILED REQUEST")
